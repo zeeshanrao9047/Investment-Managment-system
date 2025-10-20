@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
 import { useLocation } from "wouter";
-import { LogOut, Settings, Star } from "lucide-react";
+import { LogOut, Settings } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
@@ -19,12 +19,9 @@ import { IoIosNotifications } from "react-icons/io";
 
 type HeaderProps = {
   value: string;
-  showFavorite?: boolean;
-  isFavorite?: boolean;
-  onFavoriteToggle?: () => void;
 };
 
-const Header: React.FC<HeaderProps> = ({ value, showFavorite = false, isFavorite = false, onFavoriteToggle }) => {
+const Header: React.FC<HeaderProps> = ({ value }) => {
   const [, navigate] = useLocation();
   const { user, logoutMutation } = useAuth();
   const [activeMenu, setActiveMenu] = useState<string | null>(null);
@@ -68,24 +65,7 @@ const Header: React.FC<HeaderProps> = ({ value, showFavorite = false, isFavorite
             />
           </button>
 
-          <div className="flex items-center gap-2">
-            <h1 className="text-md sm:text-2xl font-medium capitalize">{value}</h1>
-            {showFavorite && (
-              <button
-                onClick={onFavoriteToggle}
-                className="hover:scale-110 transition-transform"
-                aria-label="Toggle favorite"
-              >
-                <Star
-                  className={`w-4 h-4 sm:w-5 sm:h-5 ${
-                    isFavorite
-                      ? 'fill-yellow-400 text-yellow-400'
-                      : 'text-gray-400 hover:text-yellow-400'
-                  }`}
-                />
-              </button>
-            )}
-          </div>
+          <h1 className="text-md sm:text-2xl font-medium capitalize">{value}</h1>
      </div>
 
         {/* Right side */}
