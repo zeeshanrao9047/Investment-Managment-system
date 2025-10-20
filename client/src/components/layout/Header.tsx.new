@@ -1,0 +1,146 @@
+import { useState } from 'react';
+import { useLocation } from 'wouter';
+import { LogOut, Menu, X, Settings } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { 
+  Avatar, 
+  AvatarFallback, 
+  AvatarImage 
+} from '@/components/ui/avatar';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+import { useAuth } from '@/hooks/use-auth';
+
+const Header = () => {
+  const [, navigate] = useLocation();
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { user, logoutMutation } = useAuth();
+
+  const handleLogout = () => {
+    logoutMutation.mutate(undefined, {
+      onSuccess: () => {
+        navigate('/auth');
+      }
+    });
+  };
+  
+  const handleSettings = () => {
+    navigate('/settings');
+  };
+
+  return (
+    <header className="sticky top-0 z-40 w-full border-b bg-background">
+      <div className="container flex h-16 items-center justify-between py-4">
+        <div></div>
+        
+        {/* Mobile Menu Button */}
+        <button
+          className="md:hidden"
+          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+        >
+          {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+        </button>
+        
+        {/* Desktop Menu */}
+        <div className="flex items-center gap-8">
+          <h1 className="text-2xl font-bold text-[#4CC7D1] mr-8">Finally</h1>
+          
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" className="relative h-10 w-10 rounded-full">
+                <Avatar>
+                  <AvatarImage src={user?.avatarUrl || ""} alt="Profile" />
+                  <AvatarFallback className="bg-primary/10 text-primary">
+                    {user?.firstName?.[0]}{user?.lastName?.[0] || user?.username?.[0]}
+                  </AvatarFallback>
+                </Avatar>
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="w-56">
+              {user && (
+                <>
+                  <div className="flex items-center p-2">
+                    <Avatar className="h-10 w-10 mr-3">
+                      <AvatarImage src={user.avatarUrl || ""} alt="Profile" />
+                      <AvatarFallback className="bg-primary/10 text-primary">
+                        {user.firstName?.[0]}{user.lastName?.[0] || user.username?.[0]}
+                      </AvatarFallback>
+                    </Avatar>
+                    <div className="flex flex-col space-y-1">
+                      <p className="text-sm font-medium leading-none">
+                        {user.firstName ? `${user.firstName} ${user.lastName || ''}` : user.username}
+                      </p>
+                      <p className="text-xs leading-none text-muted-foreground">
+                        {user.email || user.username}
+                      </p>
+                    </div>
+                  </div>
+                  <DropdownMenuSeparator />
+                </>
+              )}
+              <DropdownMenuItem onClick={handleSettings}>
+                <Settings className="mr-2 h-4 w-4" />
+                <span>Settings</span>
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem onClick={handleLogout} disabled={logoutMutation.isPending}>
+                <LogOut className="mr-2 h-4 w-4" />
+                <span>{logoutMutation.isPending ? "Logging out..." : "Log out"}</span>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
+        
+        {/* Mobile Menu */}
+        {mobileMenuOpen && (
+          <div className="absolute top-16 left-0 w-full bg-background border-b md:hidden">
+            <div className="container py-4">
+              {user && (
+                <div className="flex items-center mb-4 pb-2 border-b">
+                  <Avatar className="h-8 w-8 mr-2">
+                    <AvatarImage src={user.avatarUrl || ""} alt="Profile" />
+                    <AvatarFallback className="bg-primary/10 text-primary">
+                      {user.firstName?.[0]}{user.lastName?.[0] || user.username?.[0]}
+                    </AvatarFallback>
+                  </Avatar>
+                  <div>
+                    <p className="text-sm font-medium">
+                      {user.firstName ? `${user.firstName} ${user.lastName || ''}` : user.username}
+                    </p>
+                    <p className="text-xs text-muted-foreground">
+                      {user.email || user.username}
+                    </p>
+                  </div>
+                </div>
+              )}
+              <Button
+                variant="ghost"
+                className="flex items-center w-full justify-start px-2 mb-2"
+                onClick={handleSettings}
+              >
+                <Settings className="mr-2 h-4 w-4" />
+                <span>Settings</span>
+              </Button>
+              <Button
+                variant="ghost"
+                className="flex items-center w-full justify-start px-2"
+                onClick={handleLogout}
+                disabled={logoutMutation.isPending}
+              >
+                <LogOut className="mr-2 h-4 w-4" />
+                <span>{logoutMutation.isPending ? "Logging out..." : "Log out"}</span>
+              </Button>
+            </div>
+          </div>
+        )}
+      </div>
+    </header>
+  );
+};
+
+export default Header;
