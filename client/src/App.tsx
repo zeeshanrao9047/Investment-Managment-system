@@ -15,6 +15,7 @@ import Contactus from './pages/Contactus'
 import Contactsdetail from "./pages/Contactsdetail";
 import Projects from "./pages/Projects";
 import Projectdetail from "./pages/Projectdetail";
+import ProjectDetailPage from "./pages/ProjectDetailPage";
 import Communications from "./pages/Communications";
 import Newportalupdate from "./pages/Newportalupdate";
 import CapitalRaises from "./pages/CapitalRaises";
@@ -36,6 +37,7 @@ function Router() {
         <ProtectedRoute path="/contact" component={() => <Contactus />} />
         <ProtectedRoute path="/contactsdetail" component={() => <Contactsdetail/>} />
         <ProtectedRoute path="/projects" component={() => <Projects/>} />
+        <ProtectedRoute path="/projectdetail/:id" component={() => <ProjectDetailPage/>} />
         <ProtectedRoute path="/projectdetail" component={() => <Projectdetail/>} />
         <ProtectedRoute path="/communications" component={() => <Communications/>} />
         <ProtectedRoute path="/newportalupdate" component={() => <Newportalupdate/>} />
