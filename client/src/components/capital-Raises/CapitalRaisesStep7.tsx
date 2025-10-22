@@ -17,7 +17,7 @@ const CapitalRaisesStep7: React.FC = () => {
   };
 
   const onCreate = () => {
-    setLocation("/capitalraises/step7"); 
+    setLocation("/capitalraises/CapitalRaisesCreate"); 
   };
 
   return (
