@@ -1,94 +1,175 @@
+import React, { useState } from "react";
 import Header from "@/components/layout/Header";
 import Sidebar from "@/components/layout/Sidebar";
-import Reportscard from "@/components/reports/Reportscard";
-import { CommonContext } from "@/context/Contextprovider";
-import { useContext } from "react";
-import CapitalRaisesCards from "@/components/capital-Raises/CapitalRaisesCards";
+import CapitalRaisesStep2 from "@/components/capital-Raises/CapitalRaisesStep2";
 
-interface Capital {
-    title: string
-    fund: string
-
+interface CapitalRaise {
+  id: string;
+  status: string;
+  name: string;
+  targetAmount?: string;
+  totalFunds?: string;
+  type: "DRAFT" | "CLOSED" | "ACTIVE";
 }
 
-const capitalData: Capital[] = [
-    {
-        title: "goSTOPS",
-        fund: "Total Fund Received $52,800.00",
-    },
-    {
-        title: "Tax Reports",
-        fund: "Total Fund Received $60,800.00",
-    },
-    {
-        title: "Investment Reports",
-        fund: "Total Fund Received $20,800.00",
-    },
-    {
-        title: "Profit & Loss",
-        fund: "Total Fund Received $92,500.00",
-    },
-    {
-        title: "Balance Sheet",
-        fund: "Total Fund Received $55,900.00",
-    },
-    {
-        title: "Cash Flow",
-        fund: "Total Fund Received $89,200.00",
-    },
-    {
-        title: "Quarterly Report",
-        fund: "Total Fund Received $30,235.00",
-    },
-    {
-        title: "Annual Report",
-        fund: "Complete yearly performance data",
-    },
-    {
-        title: "Portfolio Report",
-        fund: "Total Fund Received $29,600.00",
-    },
-    {
-        title: "Custom Report",
-        fund: "Total Fund Received $67,805.00",
-    },
-]
+const CapitalRaises: React.FC = () => {
+  const [showStep2, setShowStep2] = useState(false);
 
+  const capitalRaises: CapitalRaise[] = [
+    {
+      id: "1",
+      status: "DRAFT",
+      name: "Bankers Hill Fund II",
+      targetAmount: "$5,000,000.00",
+      type: "DRAFT",
+    },
+    {
+      id: "2",
+      status: "CLOSED",
+      name: "503 B",
+      totalFunds: "$230,019.00",
+      type: "CLOSED",
+    },
+    {
+      id: "3",
+      status: "ACTIVE",
+      name: "Orlando Multi Family",
+      totalFunds: "$0.00",
+      type: "ACTIVE",
+    },
+    {
+      id: "4",
+      status: "ACTIVE",
+      name: "Orlando Rentals Multi-class 506b",
+      totalFunds: "$274,610.00",
+      type: "ACTIVE",
+    },
+    {
+      id: "5",
+      status: "ACTIVE",
+      name: "Crown Point",
+      totalFunds: "$0.00",
+      type: "ACTIVE",
+    },
+  ];
 
-export default function CapitalRaises() {
-    const heading = "Capital Raises";
-    const context = useContext(CommonContext);
-    if (!context) {
-        throw new Error("CommonContext must be used inside ContextProvider");
-    }
-
+  if (showStep2) {
     return (
-        <div className="block md:flex">
-            <Sidebar />
-            <div className="w-full">
-                <Header value={heading} />
-                <main className="max-w-full p-3 md:p-5 mt-[65px] lg:mt-0 transition-all duration-100 ease-in-out">
-                    <form className="max-w-sm mb-5 ">
-                        <select id="countries" className="w-56 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                            <option selected>All</option>
-                            <option value="US">United States</option>
-                            <option value="CA">Canada</option>
-                            <option value="FR">France</option>
-                            <option value="DE">Germany</option>
-                        </select>
-                    </form>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2  gap-5">
-                        {capitalData.map((capital, index) => (
-                            <CapitalRaisesCards
-                                key={index}
-                                title={capital.title}
-                                fund={capital.fund}
-                            />
-                        ))}
-                       
-                    </div>
-                </main>
-            </div>
+      <div className="block md:flex">
+        <Sidebar />
+        <div className="w-full">
+          <Header value="Capital Raises" />
+          <main className="p-6 mt-[65px] lg:mt-0 bg-gray-50 min-h-screen">
+            <CapitalRaisesStep2 />
+          </main>
         </div>
+      </div>
     );
-}
+  }
+
+  return (
+    <div className="block md:flex">
+      <Sidebar />
+      <div className="w-full">
+        <Header value="Capital Raises" />
+        <main className="p-6 mt-[65px] lg:mt-0 bg-gray-50 min-h-screen transition-all duration-300">
+          {/* Top Actions */}
+          <div className="flex justify-between items-center mb-6 border-cyan-700">
+            <select className="border-4 border-cyan-700 rounded-md text-sm px-3 py-2">
+              <option>All</option>
+              <option>Active</option>
+              <option>Closed</option>
+            </select>
+
+            <div className="flex items-center space-x-2 ">
+              <button className="bg-gray-100 px-4 py-2 rounded-md border text-sm text-cyan-500 border-blue-500">
+                Gallery
+              </button>
+              <button className="bg-gray-100 px-4 py-2 rounded-md border text-sm text-cyan-600 border-blue-500">
+                Grid
+              </button>
+              <button
+                onClick={() => setShowStep2(true)}
+                className="bg-blue-600 hover:bg-blue-700  text-white px-4 py-2 rounded-md font-medium text-sm"
+              >
+                + New Capital Raise
+              </button>
+            </div>
+          </div>
+
+          {/* Cards List */}
+          <div className="space-y-4">
+            {capitalRaises.map((raise) => (
+              <div
+                key={raise.id}
+                className="bg-white border border-gray-200 rounded-lg p-5 shadow-sm hover:shadow-md transition"
+              >
+                <div className="flex justify-between items-center">
+                  <div>
+                    <div className="flex items-center space-x-3">
+                      <div
+                        className={`w-10 h-10 flex items-center justify-center rounded-md font-bold text-white ${
+                          raise.type === "DRAFT"
+                            ? "bg-blue-600"
+                            : raise.type === "CLOSED"
+                            ? "bg-gray-400"
+                            : "bg-green-600"
+                        }`}
+                      >
+                        {raise.name.substring(0, 2)}
+                      </div>
+                      <div>
+                        <h3 className="font-semibold text-gray-900">
+                          {raise.name}
+                        </h3>
+                        <p className="text-sm text-gray-500">{raise.status}</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="text-right">
+                    {raise.targetAmount ? (
+                      <>
+                        <div className="text-sm text-gray-500">
+                          Target Amount
+                        </div>
+                        <div className="font-semibold text-gray-900">
+                          {raise.targetAmount}
+                        </div>
+                      </>
+                    ) : (
+                      <>
+                        <div className="text-sm text-gray-500">
+                          Total Funds Received
+                        </div>
+                        <div className="font-semibold text-gray-900">
+                          {raise.totalFunds}
+                        </div>
+                      </>
+                    )}
+                  </div>
+                </div>
+
+                {/* Progress bar */}
+                <div className="mt-4 w-full bg-gray-200 h-2 rounded-full overflow-hidden">
+                  <div
+                    className={`h-2 ${
+                      raise.type === "DRAFT"
+                        ? "bg-blue-600"
+                        : raise.type === "CLOSED"
+                        ? "bg-gray-400"
+                        : "bg-green-600"
+                    }`}
+                    style={{ width: `${Math.random() * 100}%` }}
+                  ></div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </main>
+      </div>
+    </div>
+  );
+};
+
+export default CapitalRaises;

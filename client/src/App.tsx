@@ -22,6 +22,14 @@ import CapitalRaises from "./pages/CapitalRaises";
 import Reports from "./pages/Reports";
 import Tasks from "./pages/Tasks";
 import Accounts from "./pages/Accounts";
+import CapitalRaisesStep2 from "@/components/capital-Raises/CapitalRaisesStep2";
+import CapitalRaisesStep3 from "@/components/capital-Raises/CapitalRaisesStep3";
+import CapitalRaisesStep4 from "@/components/capital-Raises/CapitalRaisesStep4";
+import CapitalRaisesStep5 from "@/components/capital-Raises/CapitalRaisesStep5";
+import CapitalRaisesStep6 from "@/components/capital-Raises/CapitalRaisesStep6";
+import CapitalRaisesStep7 from "@/components/capital-Raises/CapitalRaisesStep7";
+import CapitalRaisesCreate from "@/components/capital-Raises/CapitalRaisesCreate";
+import DealRoomPreview from "@/components/capital-Raises/DealRoomPreview";
 function Router() {
   return (
     <ContextProvider>
@@ -42,6 +50,17 @@ function Router() {
         <ProtectedRoute path="/communications" component={() => <Communications/>} />
         <ProtectedRoute path="/newportalupdate" component={() => <Newportalupdate/>} />
         <ProtectedRoute path="/capitalraises" component={() => <CapitalRaises/>} />
+ 
+        <Route path="/capitalraises/step2" component={() => <CapitalRaisesStep2 />} />
+        <Route path="/capitalraises/step3" component={() => <CapitalRaisesStep3 />} />
+        <Route path="/capitalraises/step4" component={() => <CapitalRaisesStep4 />} />
+        <Route path="/capitalraises/step5" component={() => <CapitalRaisesStep5 />} />
+        <Route path="/capitalraises/step6" component={() => <CapitalRaisesStep6 />} />
+        <Route path="/capitalraises/step7" component={() => <CapitalRaisesStep7 />} />
+        <Route path="/capitalraises/CapitalRaisesCreate" component={() => <CapitalRaisesCreate />} />
+        <Route path="/capitalraises/DealRoomPreview" component={() => <DealRoomPreview />} />
+
+
         <ProtectedRoute path="/reports" component={() => <Reports/>} />
         <ProtectedRoute path="/tasks" component={() => <Tasks/>} />
         <ProtectedRoute path="/accounts" component={() => <Accounts/>} />
