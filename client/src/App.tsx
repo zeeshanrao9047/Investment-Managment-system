@@ -29,6 +29,7 @@ import CapitalRaisesStep6 from "@/components/capital-Raises/CapitalRaisesStep6";
 import CapitalRaisesStep7 from "@/components/capital-Raises/CapitalRaisesStep7";
 import CapitalRaisesCreate from "@/components/capital-Raises/CapitalRaisesCreate";
 import DealRoomPreview from "@/components/capital-Raises/DealRoomPreview";
+import OpportunitiesDetail from "@/components/capital-Raises/OppertunitiesDetail";
 function Router() {
   return (
     <ContextProvider>
@@ -57,6 +58,7 @@ function Router() {
         <Route path="/capitalraises/step7" component={() => <CapitalRaisesStep7 />} />
         <Route path="/capitalraises/CapitalRaisesCreate" component={() => <CapitalRaisesCreate />} />
         <Route path="/capitalraises/DealRoomPreview" component={() => <DealRoomPreview />} />
+<Route path="/opportunities-detail" component={() => <OpportunitiesDetail/>} />
 
 
         <ProtectedRoute path="/reports" component={() => <Reports/>} />

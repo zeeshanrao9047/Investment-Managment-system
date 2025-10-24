@@ -9,6 +9,30 @@ const DealRoomPreview: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gray-50 py-6 sm:px-15 px-3">
+
+
+ <div className="flex justify-between items-center flex-wrap mb-6  border-b border-gray-200 pb-4">
+        <div className='flex items-center gap-10 flex-wrap'>
+        <div className="mb-2">
+        <h1 className="text-2xl font-bold text-gray-800">InvestNext</h1>
+      </div>
+        <div className="flex flex-wrap space-x-6">
+          <button className="font-medium text-blue-600 border-b-2 border-blue-600 pb-2">Dashboard</button>
+          <button className="font-medium text-gray-500 hover:text-gray-700 pb-2">Offerings</button>
+          <button className="font-medium text-gray-500 hover:text-gray-700 pb-2">Investments</button>
+          <button className="font-medium text-gray-500 hover:text-gray-700 pb-2">Documents</button>
+          <button className="font-medium text-gray-500 hover:text-gray-700 pb-2">Settings</button>
+        </div>
+        </div>
+        <div className="text-sm text-gray-600 flex items-center gap-1">
+          Hi, Michael Weber <IoPersonCircleOutline className='text-5xl'/>
+        </div>
+      </div> 
+
+
+
+
+
       {/* Back to Offerings */}
       <div className="mb-6">
         <button

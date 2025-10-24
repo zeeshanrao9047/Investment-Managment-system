@@ -12,9 +12,10 @@ import { HiOutlineBuildingOffice2 } from "react-icons/hi2";
 import Header from "@/components/layout/Header";
 import Sidebar from "@/components/layout/Sidebar";
 import Footer from "@/components/layout/Footer";
-
+import { RxCross1 } from "react-icons/rx";
 // ✅ Import DealRoom component
 import DealRoom from "./DealRoom";
+import Opportunities from "./Opportunities";
 
 interface ImageData {
   id: string;
@@ -36,6 +37,42 @@ const CapitalRaisesCreate: FC = () => {
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const photosInputRef = useRef<HTMLInputElement | null>(null);
   const newGalleryInputRef = useRef<HTMLInputElement | null>(null);
+const [status, setStatus] = useState(false)
+const [selectedStatus, setSelectedStatus] = useState('Draft')
+const statusOptions = [
+    {
+      value: 'Draft',
+      title: 'Draft',
+      description: 'Capital raise will not be visible on the portal'
+    },
+    {
+      value: 'Upcoming',
+      title: 'Upcoming',
+      description: 'Collecting soft commitments (no paperwork) and visible on the investor portal'
+    },
+    {
+      value: 'Active',
+      title: 'Active',
+      description: 'Actively collecting commitments and visible on the investor portal'
+    },
+    {
+      value: 'Closed',
+      title: 'Closed',
+      description: 'Not collecting any new commitments'
+    }
+  ]
+
+
+const handleStatusSelect = (optionValue) => {
+    setSelectedStatus(optionValue)
+  }
+ 
+  const handleUpdateStatus = () => {
+    // Here you would typically make an API call to update the status
+   
+    setStatus(false)
+  }
+
 
   const [dealRoomData, setDealRoomData] = useState<DealRoomState>({
     showcaseImage: null,
@@ -178,9 +215,70 @@ const CapitalRaisesCreate: FC = () => {
                     <HiOutlineBuildingOffice2 /> Go To Project
                   </button>
                 </div>
-                <button className="text-white bg-blue-500 py-2 px-3 rounded-lg flex items-center gap-2">
+                <button className="text-white bg-blue-500 py-2 px-3 rounded-lg flex items-center gap-2" onClick={() => setStatus(true)}>
                   <FaToggleOn /> Set Status
                 </button>
+{status && (
+        <div className="fixed inset-0 top-[-40px] bg-[#0000006f] flex items-center justify-center z-50">
+          <div className="bg-white w-full max-w-md rounded-lg text-black">
+            <div className="flex items-center justify-between px-8 py-2 border-b border-b-gray-400">
+              <p className="text-lg text-gray-700 font-light">
+                Edit Capital Raise Status
+              </p>
+              <RxCross1
+                className="text-gray-400 cursor-pointer text-xl"
+                onClick={() => setStatus(false)}
+              />
+            </div>
+           
+            <div className="flex flex-col gap-4 px-5 py-2">
+              {statusOptions.map((option) => (
+                <div
+                  key={option.value}
+                  className={`radio-option flex rounded-lg items-center gap-3 p-4 bg-gray-50 cursor-pointer border transition-all duration-200 hover:border-gray-300 ${
+                    selectedStatus === option.value
+                      ? 'border-blue-500 text-blue-500 active'
+                      : 'border-transparent'
+                  }`}
+                  onClick={() => handleStatusSelect(option.value)}
+                >
+                  <input
+                    type="radio"
+                    name="status"
+                    className="w-4 h-4 cursor-pointer text-blue-500"
+                    checked={selectedStatus === option.value}
+                    onChange={() => handleStatusSelect(option.value)}
+                  />
+                  <div>
+                    <h3 className={`font-medium ${
+                      selectedStatus === option.value ? 'text-blue-500' : 'text-gray-900'
+                    }`}>
+                      {option.title}
+                    </h3>
+                    <p className="text-sm text-gray-600">{option.description}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+           
+            <div className="py-6 flex justify-end gap-5 px-8">
+              <button
+                className="border border-gray-400 text-gray-700 hover:bg-gray-100 cursor-pointer py-2 px-4 rounded-lg transition-colors"
+                onClick={() => setStatus(false)}
+              >
+                Cancel
+              </button>
+              <button
+                className="border border-blue-500 text-white bg-blue-500 cursor-pointer hover:bg-blue-600 py-2 px-4 rounded-lg transition-colors"
+                onClick={handleUpdateStatus}
+              >
+                Update Status
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
               </div>
 
               {/* Stats Section */}
@@ -305,6 +403,13 @@ const CapitalRaisesCreate: FC = () => {
               </button>
             </div>
           )}
+
+          {/* --- Opportunities Tab --- */}
+{activeTab === "opportunities" && (
+  <div className="mt-4">
+    <Opportunities />
+  </div>
+)}
         </main>
 
         {/* Footer */}
