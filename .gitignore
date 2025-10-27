@@ -14,6 +14,7 @@ yarn-error.log*
 # Build outputs
 dist/
 build/
+documents/
 
 # Uploads
 uploads/*
@@ -24,6 +25,7 @@ uploads/*
 .idea/
 *.swp
 *.swo
+*.code-workspace
 
 # OS
 .DS_Store
